@@ -1,30 +1,30 @@
 {
   "config": {
     "abort": {
-      "already_configured": "Questo dispositivo è già configurato"
+      "already_configured": "Il dispositivo è già configurato"
     },
     "error": {
       "cannot_connect": "Impossibile connettersi",
-      "invalid_host": "Nome o Indirizzo IP forniti non sono validi",
-      "unknown": "Errore"
+      "invalid_host": "Nome host o indirizzo IP non invalidi",
+      "unknown": "Errore sconosciuto"
     },
     "step": {
       "user": {
-        "title": "Configurazione della connessione inverter",
+        "title": "Configurazione inverter",
         "data": {
           "name": "Nome del dispositivo",
           "inverter_discovery": "Abilita la scoperta",
-          "inverter_host": "Inverter (nome di dominio o indirizzo IP)",
+          "inverter_host": "Nome host o indirizzo IP",
           "inverter_serial": "Numero seriale del logger (da interfaccia web)",
           "inverter_port": "Porta (solitamente 8899)",
           "inverter_mb_slave_id": "Slave ID di Modbus (solitamente 1)",
           "inverter_passthrough": "Modalità passthrough del protocollo Solarman",
-          "lookup_file": "File YAML contenente la definizione Inverter",
+          "lookup_file": "File YAML contenente la definizione inverter",
           "battery_nominal_voltage": "Voltaggio nominale della batteria agli ioni di litio",
           "battery_life_cycle_rating": "Ciclo di vita previsto della batteria agli ioni di litio"
         },
         "data_description": {
-          "name": "Questo valore sarà il prefisso di tutte le entità (scegli il nome che più ritieni adatto)",
+          "name": "Questo valore sarà il prefisso di tutte le entità (scegli il nome che più ritieni adatto).",
           "inverter_host": "Il nome host o l'indirizzo IP del dispositivo a cui connettersi.",
           "inverter_port": "La porta TCP (8899) del dispositivo a cui connettersi."
         }
@@ -34,29 +34,57 @@
   "options": {
     "error": {
       "cannot_connect": "Impossibile connettersi",
-      "invalid_host": "Nome o Indirizzo IP forniti non sono validi",
-      "unknown": "Errore"
+      "invalid_host": "Nome host o indirizzo IP non validi",
+      "unknown": "Errore sconosciuto"
     },
     "step": {
       "init": {
-        "title": "Configurazione della connessione inverter",
+        "title": "Configurazione inverter",
         "data": {
           "name": "Nome del dispositivo",
           "inverter_discovery": "Abilita la scoperta",
-          "inverter_host": "Inverter (nome di dominio o indirizzo IP)",
-          "inverter_serial": "Numero seriale del logger (da interfaccia web)",
+          "inverter_host": "Nome host o indirizzo IP",
+          "inverter_serial": "umero seriale del logger (da interfaccia web)",
           "inverter_port": "Porta (solitamente 8899)",
           "inverter_mb_slave_id": "Slave ID di Modbus (solitamente 1)",
           "inverter_passthrough": "Modalità passthrough del protocollo Solarman",
-          "lookup_file": "File YAML contenente la definizione Inverter",
+          "lookup_file": "File YAML contenente la definizione inverter",
           "battery_nominal_voltage": "Voltaggio nominale della batteria agli ioni di litio",
           "battery_life_cycle_rating": "Ciclo di vita previsto della batteria agli ioni di litio"
         },
         "data_description": {
-          "name": "Questo valore sarà il prefisso di tutte le entità (scegli il nome che più ritieni adatto)",
+          "name": "Questo valore sarà il prefisso di tutte le entità (scegli il nome che più ritieni adatto).",
           "inverter_host": "Il nome host o l'indirizzo IP del dispositivo a cui connettersi.",
           "inverter_port": "La porta TCP (8899) del dispositivo a cui connettersi."
         }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "today_battery_charge": {
+        "name": "Carica odierna batteria"
+      },
+      "today_battery_discharge": {
+        "name": "Scarica odierna batteria"
+      },
+      "today_battery_life_cycles": {
+        "name": "Cicli di carica odierni batteria"
+      },
+      "today_energy_export": {
+        "name": "Energia odierna esportata"
+      },
+      "today_energy_import": {
+        "name": "Energia odierna importata"
+      },
+      "today_load_consumption": {
+        "name": "Consumo del carico odierno"
+      },
+      "today_losses": {
+        "name": "Perdite odierne"
+      },
+      "today_production": {
+        "name": "Produzione odierna"
       }
     }
   }
