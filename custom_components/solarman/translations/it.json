@@ -5,7 +5,7 @@
     },
     "error": {
       "cannot_connect": "Impossibile connettersi",
-      "invalid_host": "Nome host o indirizzo IP non invalidi",
+      "invalid_host": "Nome host o indirizzo IP non validi",
       "unknown": "Errore sconosciuto"
     },
     "step": {
@@ -34,7 +34,7 @@
   "options": {
     "error": {
       "cannot_connect": "Impossibile connettersi",
-      "invalid_host": "Nome host o indirizzo IP non validi",
+      "invalid_host": "Nome host o indirizzo IP validi",
       "unknown": "Errore sconosciuto"
     },
     "step": {
