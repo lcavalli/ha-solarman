@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 
 from typing import Any
-from functools import cached_property, partial
 
 from homeassistant.core import callback
 from homeassistant.helpers.entity import EntityDescription
@@ -17,15 +16,15 @@ from .coordinator import InverterCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
-def create_entity(creator, sensor):
+def create_entity(creator, description):
     try:
-        entity = creator(sensor)
+        entity = creator(description)
 
         entity.update()
 
         return entity
     except BaseException as e:
-        _LOGGER.error(f"Configuring {sensor} failed. [{format_exception(e)}]")
+        _LOGGER.error(f"Configuring {description} failed. [{format_exception(e)}]")
         raise
 
 class SolarmanCoordinatorEntity(CoordinatorEntity[InverterCoordinator]):
@@ -36,7 +35,7 @@ class SolarmanCoordinatorEntity(CoordinatorEntity[InverterCoordinator]):
 
     @property
     def available(self) -> bool:
-        return self._attr_available and self.coordinator.inverter.available()
+        return self.coordinator.last_update_success and self.coordinator.inverter.available()
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -64,6 +63,8 @@ class SolarmanCoordinatorEntity(CoordinatorEntity[InverterCoordinator]):
             if "value" in data:
                 self._attr_extra_state_attributes["value"] = data["value"]
             if self.attributes:
+                if "inverse" in self.attributes and self._attr_native_value:
+                    self._attr_extra_state_attributes["−x"] = -self._attr_native_value
                 for attr in filter(lambda a: a in self.coordinator.data, self.attributes):
                     self._attr_extra_state_attributes[attr.replace(f"{self.sensor_name} ", "")] = self.get_data_state(attr)
 
@@ -77,6 +78,7 @@ class SolarmanEntity(SolarmanCoordinatorEntity):
         #self._attr_has_entity_name = True
 
         self._attr_entity_registry_enabled_default = not "disabled" in sensor
+        self._attr_entity_registry_visible_default = not "hidden" in sensor
 
         self._attr_name = "{} {}".format(self.coordinator.inverter.name, self.sensor_name) if self.sensor_name else self.coordinator.inverter.name
         #elf._attr_name = "{}".format(self.sensor_name) if self.sensor_name else self.coordinator.inverter.name

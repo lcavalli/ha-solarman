@@ -34,15 +34,12 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [0x314A]
         icon: "mdi:power-plug"
 
       - name: "Battery Control Mode"
         state_class: "measurement"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x340F]
         lookup:
@@ -59,7 +56,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 3
         registers: [0x16A2]
         icon: "mdi:solar-power-variant"
@@ -86,7 +82,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [0x3132]
         icon: "mdi:solar-power-variant"
@@ -113,7 +108,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [0x3135]
         icon: "mdi:solar-power-variant"
@@ -124,7 +118,6 @@ parameters:
         class: "current"
         state_class: "measurement"
         uom: "mA"
-        scale: 1
         rule: 1
         registers: [0x319C]
         icon: "mdi:lightning-bolt-outline"
@@ -132,8 +125,6 @@ parameters:
       - name: "Device State"
         class: "State"
         state_class: "measurement"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x3400]
         lookup:
@@ -143,13 +134,12 @@ parameters:
             value: "Grid Peak Shift"
           - key: 2
             value: "Battery Priority (Storm Watch)"
-        icon: "mdi:cog-outline"
+        icon: "mdi:state-machine"
 
       - name: "Temperature"
         class: "Temperature"
         state_class: "measurement"
         uom: "°C"
-        scale: 1
         rule: 2
         registers: [0x311A]
         icon: "mdi:thermometer"
@@ -158,13 +148,12 @@ parameters:
         class: "Temperature"
         state_class: "measurement"
         uom: "°C"
-        scale: 1
         rule: 2
         registers: [0x311B]
         icon: "mdi:thermometer"
 
-      - name: "Today PV Production"
-        friendly_name: Today's PV Production
+      - name: "Today Production"
+        friendly_name: Today's Production
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
@@ -213,7 +202,7 @@ parameters:
         registers: [0x316F]
         icon: "mdi:battery-minus"
 
-      - name: "Total PV Production"
+      - name: "Total Production"
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
@@ -221,6 +210,8 @@ parameters:
         rule: 3
         registers: [0x3165]
         icon: "mdi:solar-power"
+        validation:
+          min: 0.1
 
       - name: "Total Energy Import"
         class: "energy"
@@ -230,6 +221,8 @@ parameters:
         rule: 3
         registers: [0x317D]
         icon: "mdi:transmission-tower-export"
+        validation:
+          min: 0.1
 
       - name: "Total Energy Export"
         class: "energy"
@@ -239,6 +232,8 @@ parameters:
         rule: 3
         registers: [0x3167]
         icon: "mdi:transmission-tower-import"
+        validation:
+          min: 0.1
 
       - name: "Total Load Consumption"
         class: "energy"
@@ -247,6 +242,8 @@ parameters:
         scale: 0.001
         rule: 3
         registers: [0x3169]
+        validation:
+          min: 0.1
 
       - name: "Total Battery Charge"
         class: "energy"
@@ -256,6 +253,8 @@ parameters:
         rule: 3
         registers: [0x317F]
         icon: "mdi:battery-plus"
+        validation:
+          min: 0.1
 
       - name: "Total Battery Discharge"
         class: "energy"
@@ -265,12 +264,13 @@ parameters:
         rule: 3
         registers: [0x3181]
         icon: "mdi:battery-minus"
+        validation:
+          min: 0.1
 
       - name: "DC Temperature"
         class: "temperature"
         state_class: "measurement"
         uom: "°C"
-        scale: 1
         rule: 2
         registers: [0x3152]
         icon: "mdi:thermometer"
@@ -299,7 +299,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [0x3112]
         icon: "mdi:current-ac"
@@ -326,7 +325,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [0x3115]
         icon: "mdi:current-ac"
@@ -353,7 +351,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [0x3118]
         icon: "mdi:current-ac"
@@ -391,7 +388,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [0x3122]
         icon: "mdi:current-ac"
@@ -427,7 +423,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [0x3126]
         icon: "mdi:current-ac"
@@ -463,7 +458,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [0x312A]
         icon: "mdi:current-ac"

@@ -1,8 +1,10 @@
 import types
+import struct
+
 from datetime import timedelta as td
 
 DOMAIN = "solarman"
-PLATFORMS: list[str] = ["sensor", "binary_sensor", "switch", "number", "select", "time"]
+PLATFORMS: list[str] = ["sensor", "binary_sensor", "switch", "number", "select", "time", "datetime"]
 
 IP_BROADCAST = "<broadcast>"
 IP_ANY = "0.0.0.0"
@@ -11,7 +13,7 @@ PORT_ANY = 0
 
 DISCOVERY_PORT = 48899
 DISCOVERY_TIMEOUT = 1.0
-DISCOVERY_MESSAGE = "WIFIKIT-214028-READ".encode()
+DISCOVERY_MESSAGE = ["WIFIKIT-214028-READ".encode(), "HF-A11ASSISTHREAD".encode()]
 DISCOVERY_RECV_MESSAGE_SIZE = 1024
 
 COMPONENTS_DIRECTORY = "custom_components"
@@ -20,22 +22,17 @@ LOOKUP_DIRECTORY = "inverter_definitions"
 LOOKUP_DIRECTORY_PATH = f"{COMPONENTS_DIRECTORY}/{DOMAIN}/{LOOKUP_DIRECTORY}/"
 LOOKUP_CUSTOM_DIRECTORY_PATH = f"{COMPONENTS_DIRECTORY}/{DOMAIN}/{LOOKUP_DIRECTORY}/custom/"
 
-CONF_DISCOVERY = "inverter_discovery"
-CONF_DISCOVERED = "discovered"
+CONF_SERIAL = "inverter_serial"
 CONF_INVERTER_HOST = "inverter_host"
-CONF_INVERTER_SERIAL = "inverter_serial"
 CONF_INVERTER_PORT = "inverter_port"
-CONF_INVERTER_MB_SLAVE_ID = "inverter_mb_slave_id"
-CONF_PASSTHROUGH = "inverter_passthrough"
+CONF_MB_SLAVE_ID = "inverter_mb_slave_id"
 CONF_LOOKUP_FILE = "lookup_file"
 CONF_BATTERY_NOMINAL_VOLTAGE = "battery_nominal_voltage"
 CONF_BATTERY_LIFE_CYCLE_RATING = "battery_life_cycle_rating"
 
 DEFAULT_NAME = "Inverter"
-DEFAULT_DISCOVERY = True
 DEFAULT_INVERTER_PORT = 8899
-DEFAULT_INVERTER_MB_SLAVE_ID = 1
-DEFAULT_PASSTHROUGH = False
+DEFAULT_MB_SLAVE_ID = 1
 DEFAULT_LOOKUP_FILE = "deye_hybrid.yaml"
 DEFAULT_BATTERY_NOMINAL_VOLTAGE = 48
 DEFAULT_BATTERY_LIFE_CYCLE_RATING = 6000
@@ -46,6 +43,12 @@ DEFAULT_REGISTERS_MIN_SPAN = 25
 DEFAULT_DIGITS = 6
 
 PROFILE_REDIRECT_TABLE = { "sofar_hyd3k-6k-es.yaml": "sofar_hyd-es.yaml", "hyd-zss-hp-3k-6k.yaml": "zcs_azzurro-hyd-zss-hp.yaml", "solis_1p8k-5g.yaml": "solis_1p-5g.yaml" }
+
+STATE_SENSORS = [{"name": "Connection", "artificial": "state", "platform": "binary_sensor"}, {"name": "Update Interval", "artificial": "interval"}]
+
+CONTROL_CODE = types.SimpleNamespace()
+CONTROL_CODE.REQUEST = struct.pack("<H", 0x4510)
+CONTROL_CODE.RESPONSE = struct.pack("<H", 0x1510)
 
 AUTO_RECONNECT = True
 
@@ -58,7 +61,7 @@ AUTO_RECONNECT = True
 # On the contrary changing this value can break:
 # - Request scheduling according "update_interval" properties set in profiles
 # - Inverter configuring flows
-# - Behavior of integration services
+# - Behavior of services
 #
 TIMINGS_INTERVAL = 5
 TIMINGS_INTERVAL_SCALE = 1
@@ -103,3 +106,6 @@ SERVICE_READ_HOLDING_REGISTERS = "read_holding_registers"
 SERVICE_READ_INPUT_REGISTERS = "read_input_registers"
 SERVICE_WRITE_HOLDING_REGISTER = "write_holding_register"
 SERVICE_WRITE_MULTIPLE_HOLDING_REGISTERS = "write_multiple_holding_registers"
+
+DATETIME_FORMAT = "%y/%m/%d %H:%M:%S"
+TIME_FORMAT = "%H:%M"

@@ -19,9 +19,9 @@ default:
 
 parameters:
   - group: PV
+    update_interval: 5
     items:
       - name: "PV1 Voltage"
-        realtime:
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -31,7 +31,6 @@ parameters:
         icon: "mdi:solar-power"
 
       - name: "PV2 Voltage"
-        realtime:
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -41,7 +40,6 @@ parameters:
         icon: "mdi:solar-power"
 
       - name: "PV1 Current"
-        realtime:
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -51,7 +49,6 @@ parameters:
         icon: "mdi:solar-power"
 
       - name: "PV2 Current"
-        realtime:
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -63,7 +60,6 @@ parameters:
       # PV - The combined power of Input 1 & 2 (L:1W, H:10W)
       - name: "PV Power"
         description: Combined power of all inputs
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
@@ -71,26 +67,24 @@ parameters:
         digits: 0
         registers: [3024, 3025]
         sensors:
-          - registers: [3024]
-          - registers: [3025]
+          - signed:
+            registers: [3024]
+          - signed:
+            registers: [3025]
         icon: "mdi:solar-power-variant"
 
       - name: "PV1 Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3024]
         icon: "mdi:solar-power"
 
       - name: "PV2 Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3025]
         icon: "mdi:solar-power"
@@ -111,7 +105,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3038, 3037]
         icon: "mdi:solar-power"
@@ -121,7 +114,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3040, 3039]
         icon: "mdi:solar-power"
@@ -136,17 +128,18 @@ parameters:
         rule: 3
         registers: [3042, 3041]
         icon: "mdi:solar-power"
+        validation:
+          min: 0.1
 
   - group: Power Grid
     items:
       # Should this be the sum of the 3 phases "Meter Power"?
       - name: "Grid Power"
         alt: "Total Grid Power"
-        realtime:
+        update_interval: 5
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3100]
         icon: "mdi:transmission-tower"
@@ -169,7 +162,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3111, 3110]
         icon: "mdi:transmission-tower-export"
@@ -180,7 +172,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3113, 3112]
         icon: "mdi:transmission-tower-export"
@@ -195,6 +186,8 @@ parameters:
         rule: 3
         registers: [3115, 3114]
         icon: "mdi:transmission-tower-export"
+        validation:
+          min: 0.1
 
       - name: Today Energy Export
         alt: Daily Energy Feed-In
@@ -214,7 +207,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3118, 3117]
         icon: "mdi:transmission-tower-import"
@@ -225,7 +217,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3120, 3119]
         icon: "mdi:transmission-tower-import"
@@ -240,6 +231,8 @@ parameters:
         rule: 3
         registers: [3122, 3121]
         icon: "mdi:transmission-tower-import"
+        validation:
+          min: 0.1
 
   - group: Electricity Consumption
     items:
@@ -250,7 +243,6 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [3144]
         icon: "mdi:home-lightning-bolt"
@@ -272,7 +264,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3149, 3148]
         icon: "mdi:home-lightning-bolt"
@@ -282,7 +273,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3151, 3150]
         icon: "mdi:home-lightning-bolt"
@@ -296,15 +286,14 @@ parameters:
         rule: 3
         registers: [3153, 3152]
         icon: "mdi:home-lightning-bolt"
+        validation:
+          min: 0.1
 
   - group: Battery
     items:
       - name: "Battery Type"
         update_interval: 300
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3062]
         icon: "mdi:battery"
@@ -315,7 +304,7 @@ parameters:
             value: "LFP"
 
       - name: "Battery Voltage"
-        realtime:
+        update_interval: 5
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -325,7 +314,7 @@ parameters:
         icon: "mdi:battery-charging"
 
       - name: "Battery Current"
-        realtime:
+        update_interval: 5
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -335,17 +324,16 @@ parameters:
         icon: "mdi:battery-charging-10"
 
       - name: "Battery Power"
-        realtime:
+        update_interval: 5
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3065]
         icon: "mdi:battery-charging-high"
 
       - name: "Battery"
-        realtime:
+        update_interval: 5
         class: "battery"
         state_class: "measurement"
         uom: "%"
@@ -366,10 +354,8 @@ parameters:
 
       - name: "Battery Discharge Capacity Depth"
         update_interval: 300
-        class: ""
         state_class: "measurement"
         uom: "%"
-        scale: 1
         rule: 1
         registers: [3068]
         icon: "mdi:battery-20"
@@ -388,7 +374,6 @@ parameters:
         icon: "mdi:battery-heart-outline"
 
       - name: "Battery SOH"
-        class: ""
         state_class: "measurement"
         uom: "%"
         scale: 0.1
@@ -403,10 +388,11 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3293, 3292]
         icon: "mdi:battery-minus-variant"
+        validation:
+          min: 0.1
 
       - name: "Today Battery Discharge"
         alt: Battery Daily Discharge
@@ -426,10 +412,11 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3300, 3299]
         icon: "mdi:battery-minus-variant"
+        validation:
+          min: 0.1
 
       - name: "Today Battery Charge"
         alt: Battery Daily Charge
@@ -443,14 +430,78 @@ parameters:
         registers: [3301]
         icon: "mdi:battery-plus-variant"
 
+  - group: Losses
+    update_interval: 30
+    items:
+      - name: Today Losses
+        alt: Daily Losses
+        friendly_name: Today's Losses
+        description: Includes today's consumption of the inverter device itself as well AC/DC conversion losses
+        update_interval: 30
+        class: "energy"
+        state_class: "total_increasing"
+        ensure_increasing:
+        uom: "kWh"
+        rule: 1
+        digits: 1
+        scale: 0.1
+        registers: [3109, 3036, 3294, 3116, 3147, 3301]
+        uint: enforce
+        sensors:
+          - registers: [3109]
+          - registers: [3036]
+          - registers: [3294]
+          - operator: subtract
+            registers: [3116]
+          - operator: subtract
+            registers: [3147]
+          - operator: subtract
+            registers: [3301]
+
+      - name: Total Losses
+        description: Includes total consumption of the inverter device itself as well AC/DC conversion losses
+        update_interval: 30
+        class: "energy"
+        state_class: "total_increasing"
+        ensure_increasing:
+        uom: "kWh"
+        rule: 3
+        digits: 1
+        scale: 0.1
+        registers:
+          [
+            3115,
+            3114,
+            3042,
+            3041,
+            3293,
+            3292,
+            3122,
+            3121,
+            3153,
+            3152,
+            3300,
+            3299,
+          ]
+        uint: enforce
+        sensors:
+          - registers: [3115, 3114]
+          - registers: [3042, 3041]
+          - registers: [3293, 3292]
+          - operator: subtract
+            registers: [3122, 3121]
+          - operator: subtract
+            registers: [3153, 3152]
+          - operator: subtract
+            registers: [3300, 3299]
+        validation:
+          min: 1
+
   - group: Inverter Information
     items:
       - name: "Inverter Working Mode"
         update_interval: 300
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3044]
         lookup:
@@ -465,9 +516,6 @@ parameters:
       - name: "Inverter Model"
         update_interval: 600
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3045]
         lookup:
@@ -516,9 +564,6 @@ parameters:
       - name: "System status"
         update_interval: 30
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3046]
         lookup:
@@ -555,9 +600,6 @@ parameters:
       - name: "Inverter Status"
         update_interval: 30
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3047]
         lookup:
@@ -576,9 +618,6 @@ parameters:
       - name: "DCDC Status"
         update_interval: 30
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3048]
         lookup:
@@ -594,20 +633,12 @@ parameters:
 
       - name: "DSP Alarm Code"
         update_interval: 30
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 6
         registers: [3050, 3049]
         icon: "mdi:wrench"
 
       - name: "DSP Error Code"
         update_interval: 30
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 6
         registers: [3052, 3051]
         icon: "mdi:wrench"
@@ -615,9 +646,6 @@ parameters:
       - name: "Grid Standard"
         update_interval: 600
         class: "enum"
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3193]
         lookup:
@@ -669,10 +697,6 @@ parameters:
 
       - name: "Inverter Model Name"
         update_interval: 600
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 5
         registers: [3200, 3201, 3202, 3203, 3204, 3205, 3206, 3207]
         code: 0x03
@@ -680,10 +704,6 @@ parameters:
 
       - name: "Inverter Battery Name"
         update_interval: 600
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 5
         registers: [3208, 3209, 3210, 3211, 3212, 3213, 3214, 3215]
         code: 0x03
@@ -694,10 +714,6 @@ parameters:
       # to a parsed string?
       - name: "ARM Version Number"
         update_interval: 600
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3216]
         code: 0x03
@@ -705,10 +721,6 @@ parameters:
 
       - name: "DSP Version Number"
         update_interval: 600
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3217]
         code: 0x03
@@ -716,10 +728,6 @@ parameters:
 
       - name: "Device Serial Number"
         update_interval: 600
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 5
         registers:
           [3228, 3229, 3230, 3231, 3232, 3233, 3234, 3235, 3236, 3237, 3238]
@@ -728,7 +736,7 @@ parameters:
   - group: Inverter
     items:
       - name: "Inverter Bus Voltage"
-        realtime:
+        update_interval: 5
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -738,7 +746,7 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "Inverter DC Bus Voltage"
-        realtime:
+        update_interval: 5
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -772,9 +780,9 @@ parameters:
   # - S: Secondary
   # - T: Tertiary
   - group: R Phase
+    update_interval: 5
     items:
       - name: "R-phase Grid Voltage"
-        realtime:
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -784,7 +792,6 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Grid Frequency"
-        realtime:
         class: "frequency"
         state_class: "measurement"
         uom: "Hz"
@@ -794,7 +801,6 @@ parameters:
         icon: "mdi:sine-wave"
 
       - name: "R-phase Meter Current"
-        realtime:
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -804,17 +810,14 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Grid Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3100]
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Inverter Voltage"
-        realtime:
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -824,7 +827,6 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Inverter Current"
-        realtime:
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -834,7 +836,6 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Inverter Frequency"
-        realtime:
         class: "frequency"
         state_class: "measurement"
         uom: "Hz"
@@ -844,17 +845,14 @@ parameters:
         icon: "mdi:sine-wave"
 
       - name: "R-phase Inverter Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 2
         registers: [3126]
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Backup Voltage"
-        realtime:
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -864,7 +862,6 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Backup Current"
-        realtime:
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -874,21 +871,37 @@ parameters:
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Backup Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [3137]
         icon: "mdi:home-lightning-bolt"
 
       - name: "R-phase Load Power"
-        realtime:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 1
         rule: 1
         registers: [3144]
         icon: "mdi:home-lightning-bolt"
+
+      - name: "Power losses"
+        description: Includes consumption of the inverter device itself as well AC/DC conversion losses
+        class: "power"
+        state_class: "measurement"
+        uom: "W"
+        rule: 1
+        digits: 0
+        registers: [3024, 3025, 3065, 3126]
+        uint: enforce
+        sensors:
+          - signed:
+            registers: [3024]
+          - signed:
+            registers: [3025]
+          - signed:
+            registers: [3065]
+          - operator: subtract
+            signed:
+            registers: [3126]

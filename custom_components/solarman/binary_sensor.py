@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 
 from typing import Any
-from functools import cached_property, partial
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
@@ -20,23 +19,23 @@ _LOGGER = logging.getLogger(__name__)
 
 _PLATFORM = get_current_file_name(__name__)
 
-def _create_sensor(coordinator, sensor):
-    if "artificial" in sensor:
-        match sensor["artificial"]:
+def _create_entity(coordinator, description):
+    if "artificial" in description:
+        match description["artificial"]:
             case "state":
-                return SolarmanConnectionSensor(coordinator, sensor)
+                return SolarmanConnectionSensor(coordinator, description)
 
-    return SolarmanBinarySensorEntity(coordinator, sensor)
+    return SolarmanBinarySensorEntity(coordinator, description)
 
 async def async_setup_entry(hass: HomeAssistant, config: ConfigEntry, async_add_entities: AddEntitiesCallback) -> bool:
     _LOGGER.debug(f"async_setup_entry: {config.options}")
     coordinator = hass.data[DOMAIN][config.entry_id]
 
-    sensors = coordinator.inverter.get_sensors()
+    descriptions = coordinator.inverter.get_entity_descriptions()
 
     _LOGGER.debug(f"async_setup: async_add_entities")
 
-    async_add_entities(create_entity(lambda s: _create_sensor(coordinator, s), sensor) for sensor in sensors if is_platform(sensor, _PLATFORM))
+    async_add_entities(create_entity(lambda x: _create_entity(coordinator, x), d) for d in descriptions if is_platform(d, _PLATFORM))
 
     return True
 
@@ -59,8 +58,8 @@ class SolarmanBinarySensorEntity(SolarmanEntity, BinarySensorEntity):
 class SolarmanConnectionSensor(SolarmanBinarySensorEntity):
     def __init__(self, coordinator, sensor):
         super().__init__(coordinator, sensor)
-        self._attr_entity_category = EntityCategory.DIAGNOSTIC
         self._attr_device_class = BinarySensorDeviceClass.CONNECTIVITY 
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def available(self) -> bool:
@@ -75,3 +74,4 @@ class SolarmanConnectionSensor(SolarmanBinarySensorEntity):
     def update(self):
         self.set_state(self.coordinator.inverter.state)
         self._attr_extra_state_attributes["updated"] = self.coordinator.inverter.state_updated.strftime("%m/%d/%Y, %H:%M:%S")
+        # Maybe set the timestamp using HA's datetime format???

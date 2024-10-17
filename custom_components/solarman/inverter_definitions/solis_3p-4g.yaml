@@ -14,10 +14,6 @@ parameters:
   - group: Inverter
     items:
       - name: "Working Mode"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3040]
         icon: "mdi:home-lightning-bolt"
@@ -47,41 +43,21 @@ parameters:
         icon: "mdi:thermometer"
 
       - name: "Product Model"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [2999]
-        isstr: true
 
       - name: "DSP Software Version"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3000]
-        isstr: true
 
       - name: "LCD Software Version"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3001]
-        isstr: true
 
       - name: "Inverter Status"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [3043]
         icon: "mdi:list-status"
-        isstr: true
         lookup:
           - key: 0
             value: "Waiting"
@@ -260,7 +236,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3011, 3010]
         icon: "mdi:solar-power"
@@ -269,7 +244,6 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3017, 3016]
         icon: "mdi:solar-power"
@@ -278,7 +252,8 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [3009, 3008]
         icon: "mdi:solar-power"
+        validation:
+          min: 0.1

@@ -92,25 +92,22 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x021D, 0x021C]
         icon: "mdi:solar-power"
+        validation:
+          min: 0.1
 
       - name: "Total Production time"
-        class: ""
         state_class: "measurement"
         uom: "h"
-        scale: 1
         rule: 3
         registers: [0x0245, 0x0244]
         icon: "mdi:clock-outline"
 
       - name: "Today Production time"
-        class: ""
         state_class: "total_increasing"
         uom: "min"
-        scale: 1
         rule: 1
         registers: [0x0243]
         icon: "mdi:clock-outline"
@@ -153,36 +150,37 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x021F, 0x021E]
         icon: "mdi:transmission-tower-import"
+        validation:
+          min: 0.1
 
       - name: "Total Energy Import"
         alt: "Total Grid Consumption"
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x0221, 0x0220]
         icon: "mdi:transmission-tower-export"
+        validation:
+          min: 0.1
 
       - name: "Total Load Consumption"
         alt: "Total Power Consumption"
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x0223, 0x0222]
         icon: "mdi:lightning-bolt"
+        validation:
+          min: 0.1
 
   - group: Load
     items:
       - name: "Load Power"
-        class: ""
-        state_class: ""
         uom: "kW"
         scale: 0.01
         rule: 1
@@ -199,7 +197,6 @@ parameters:
       #      icon: 'mdi:home-lightning-bolt'
 
       #    - name: "Output reactive power"
-      #      class: ""
       #      state_class: "measurement"
       #      uom: "kVar"
       #      scale: 0.01
@@ -258,7 +255,6 @@ parameters:
         class: "battery"
         state_class: "measurement"
         uom: "%"
-        scale: 1
         rule: 1
         registers: [0x0210]
         icon: "mdi:battery"
@@ -267,17 +263,13 @@ parameters:
         class: "temperature"
         state_class: "measurement"
         uom: "°C"
-        scale: 1
         #se non funziona cambia questo in 2
         rule: 1
         registers: [0x0211]
         icon: "mdi:battery-heart-outline"
 
       - name: "Battery Cycles"
-        class: ""
-        state_class: ""
         uom: "Charges"
-        scale: 1
         rule: 1
         registers: [0x022C]
         icon: "mdi:battery-check-outline"
@@ -292,19 +284,12 @@ parameters:
         icon: "mdi:battery-charging-high"
 
       - name: "Battery Type"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x10B0]
         icon: "mdi:battery"
 
       - name: "Battery Capacity"
-        class: ""
-        state_class: ""
         uom: "Ah"
-        scale: 1
         rule: 1
         registers: [0x10B1]
         icon: "mdi:battery"
@@ -336,24 +321,24 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x0227, 0x0226]
         icon: "mdi:battery"
+        validation:
+          min: 0.1
 
       - name: "Total Battery Discharge"
         alt: "Battery Total Discharge"
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 1
         rule: 3
         registers: [0x0229, 0x0228]
         icon: "mdi:battery"
+        validation:
+          min: 0.1
 
       - name: "Max Charge Voltage"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.1
         rule: 1
@@ -361,8 +346,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Max Charge Current"
-        class: ""
-        state_class: ""
         uom: "A"
         scale: 0.01
         rule: 1
@@ -370,8 +353,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Over Voltage Protection"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.1
         rule: 1
@@ -379,8 +360,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Min Discharge Voltage"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.1
         rule: 1
@@ -388,8 +367,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Max Discharge Current"
-        class: ""
-        state_class: ""
         uom: "A"
         scale: 0.01
         rule: 1
@@ -397,8 +374,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Undervoltage Protection"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.1
         rule: 1
@@ -406,26 +381,18 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Discharge Depth"
-        class: ""
-        state_class: ""
         uom: "%"
-        scale: 1
         rule: 1
         registers: [0x10B9]
         icon: "mdi:battery"
 
       - name: "Periods Of Discharge Time"
-        class: ""
-        state_class: ""
         uom: "h"
-        scale: 1
         rule: 1
         registers: [0x10BA]
         icon: "mdi:battery"
 
       - name: "Empty Battery Voltage"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.01
         rule: 1
@@ -433,8 +400,6 @@ parameters:
         icon: "mdi:battery"
 
       - name: "Full Battery Voltage"
-        class: ""
-        state_class: ""
         uom: "V"
         scale: 0.01
         rule: 1
@@ -445,22 +410,9 @@ parameters:
     items:
       - name: "Device State"
         class: "enum"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0200]
-        isstr: true
-        options:
-          [
-            "Standby",
-            "Self-test",
-            "Normal",
-            "Discharging Check",
-            "Discharging",
-            "EPS",
-            "Alarm",
-            "Fault",
-          ]
+        icon: "mdi:state-machine"
         lookup:
           - key: 0
             value: "Standby"
@@ -482,7 +434,6 @@ parameters:
       - name: "Temperature"
         class: "temperature"
         uom: "°C"
-        scale: 1
         rule: 2
         registers: [0x0239]
         icon: "mdi:thermometer"
@@ -491,7 +442,6 @@ parameters:
         class: "temperature"
         state_class: "measurement"
         uom: "°C"
-        scale: 1
         rule: 2
         registers: [0x0238]
         icon: "mdi:thermometer"
@@ -524,66 +474,43 @@ parameters:
       #      icon: 'mdi:home-lightning-bolt'
 
       - name: "Countdown time"
-        class: ""
         state_class: "measurement"
         uom: "s"
-        scale: 1
         rule: 1
         registers: [0x022A]
         icon: ""
 
       #    - name: "Input mode"
-      #      class: ""
-      #      state_class: ""
-      #      uom: ""
-      #      scale: 1
       #      rule: 1
       #      registers: [0x0022]
       #      icon: ''
 
       - name: "Communication Board inner message"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0242]
         icon: ""
 
       - name: "Insulation of PV1+ to ground"
-        class: ""
         state_class: "measurement"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0246]
         icon: ""
 
       - name: "Insulation of PV2+ to ground"
-        class: ""
         state_class: "measurement"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0247]
         icon: ""
 
       - name: "Insulation of PV- to ground"
-        class: ""
         state_class: "measurement"
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0248]
         icon: ""
 
       - name: "Country"
-        class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x023A]
-        isstr: true
         lookup:
           - key: 0
             value: "Germany"
@@ -650,13 +577,8 @@ parameters:
   - group: Alert
     items:
       - name: "Inverter alert message"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x022B]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -805,13 +727,8 @@ parameters:
         icon: "mdi:alert"
 
       - name: "Fault 1"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0201]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -850,13 +767,8 @@ parameters:
         icon: "mdi:wrench"
 
       - name: "Fault 2"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0202]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -895,13 +807,8 @@ parameters:
         icon: "mdi:wrench"
 
       - name: "Fault 3"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0203]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -940,13 +847,8 @@ parameters:
         icon: "mdi:wrench"
 
       - name: "Fault 4"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0204]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -985,13 +887,8 @@ parameters:
         icon: "mdi:wrench"
 
       - name: "Fault 5"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x0205]
-        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -1068,8 +965,6 @@ parameters:
         icon: "mdi:lightning-bolt"
 
       - name: "Charge/Discharge Power"
-        class: ""
-        state_class: ""
         uom: "kW"
         scale: 0.01
         rule: 2
@@ -1077,8 +972,6 @@ parameters:
         icon: ""
 
       - name: "Feed In/Out power"
-        class: ""
-        state_class: ""
         uom: "kW"
         scale: 0.01
         rule: 2
@@ -1095,10 +988,6 @@ parameters:
         icon: "mdi:lightning-bolt"
 
       - name: "Energy Management Model"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
         rule: 1
         registers: [0x10B2]
         icon: ""
@@ -1107,7 +996,6 @@ parameters:
         class: "current"
         state_class: "measurement"
         uom: "mA"
-        scale: 1
         rule: 1
         registers: [0x023B]
         icon: "mdi:lightning-bolt"
